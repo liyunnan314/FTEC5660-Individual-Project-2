@@ -40,7 +40,7 @@ LLM calls follow `calls = 13 + 2 x rounds` exactly. Prompt characters grow super
 | Final rating in legal enum | 100% | 30/30 | reproduced |
 | 12 data/tool methods reached | 12/12 | 12/12 in every cell | reproduced |
 | 7 report fields non-empty | 7/7 | 7/7 in every cell | reproduced |
-| Published return / Sharpe / drawdown table | paper numbers | not measured | NOT reproducible (no LLM key, no live data) |
+| Published return / Sharpe / drawdown table | paper numbers | not measured | NOT reproducible (model / data / code drift; see report §4.3) |
 
 ## Table 4. Decision distribution (cells)
 

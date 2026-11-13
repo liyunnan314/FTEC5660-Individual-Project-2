@@ -1,4 +1,4 @@
-wrote figures: fig1_arm_comparison.png, fig2_rounds_dose_response.png, fig3_decision_distribution.png
+wrote figures: fig1_arm_comparison.png, fig2_rounds_dose_response.png, fig3_decision_distribution.png, fig4_real_llm.png
 wrote tables: comparison.md, report_numbers.json
 |---|---:|---:|---:|
 | Success rate | 1.00 +/- 0.00 | 1.00 +/- 0.00 | +0.00 (+0.0%) |

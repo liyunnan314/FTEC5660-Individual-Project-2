@@ -195,7 +195,7 @@ def main() -> None:
         f"| Final rating in legal enum | 100% | {len([r for r in cells if r['rating_legal']=='True'])}/{len(cells)} | reproduced |",
         f"| 12 data/tool methods reached | 12/12 | {int(num(b_cells[0],'data_methods'))}/12 in every cell | reproduced |",
         f"| 7 report fields non-empty | 7/7 | {int(num(b_cells[0],'reports_nonempty'))}/7 in every cell | reproduced |",
-        "| Published return / Sharpe / drawdown table | paper numbers | not measured | NOT reproducible (no LLM key, no live data) |",
+        "| Published return / Sharpe / drawdown table | paper numbers | not measured | NOT reproducible (model / data / code drift; see report §4.3) |",
         "",
         "## Table 4. Decision distribution (cells)\n",
         "| Rating | Baseline | Modified |",
