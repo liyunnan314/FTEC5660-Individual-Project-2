@@ -40,7 +40,7 @@ Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_repo
 | # | Required item | Where it is |
 |---|---|---|
 | 1 | Brief report (max 10 pages) | `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
-| 2 | GitHub link: clear README, changes in commits, no secrets | This repository — install/run steps above, twelve incremental commits (`git log --oneline`), nothing credential-like tracked (see [No secrets](#no-secrets)) |
+| 2 | GitHub link: clear README, changes in commits, no secrets | This repository — install/run steps below, one concern per commit (`git log --oneline`), nothing credential-like tracked (see [No secrets](#no-secrets)) |
 | 3 | Recorded Zoom presentation (max 15 min) | Script and slides in `presentation/` |
 
 ---
@@ -211,8 +211,8 @@ git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}'
 
 ## Repository
 
-`https://github.com/liyunnan314/FTEC5660-Reproducibility` — branch `main`, twelve
-incremental commits, one concern per commit (`git log --oneline` shows the order:
+`https://github.com/liyunnan314/FTEC5660-Reproducibility` — branch `main`, a short
+history of incremental commits, one concern per commit (`git log --oneline` shows the order:
 scaffold → harness → runner → the single config change → results → report →
 live-model follow-up → fixes).
 
