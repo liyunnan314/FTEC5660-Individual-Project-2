@@ -1,0 +1,24 @@
+# Local environment and upstream checkout (never committed)
+.venv/
+vendor/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Placeholder-only env file; real keys are never stored here
+.env
+
+# OS / editor noise
+.DS_Store
+.idea/
+.vscode/
+
+# Intermediate per-run work directories are regenerated; raw metrics JSON is kept
+results/raw/*/*/cache/
+results/raw/*/*/results/
+results/raw/*/*/memory/
+results/raw/_probe/
+results/raw/_smoke/
+results/raw/_sweep/
+report/*.pdf.tmp
