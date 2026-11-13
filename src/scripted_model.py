@@ -1,22 +1,4 @@
-"""A deterministic, seeded stand-in for the upstream LLM.
-
-Edge Case A of the assignment permits swapping the underlying model as a
-controlled variable. No hosted LLM API key is available in this environment, so
-instead of DeepSeek we inject an in-process scripted chat model through the
-*upstream repository's own* test seam (``trading_graph.create_tier_client``).
-
-Compared with the upstream ``tests/test_graph_end_to_end.py::ScriptedModel``
-fixture, this version adds:
-
-* a seed that controls the final portfolio rating, so repeated trials are
-  reproducible yet not byte-identical (a controlled stand-in for sampling
-  variation, which the upstream README explicitly says exists);
-* a call log recording node name, prompt size, tool calls, thread and timing
-  for every LLM invocation. Those records are the raw measurements.
-
-Nothing here edits the upstream source. Prompts, tool schemas, graph topology
-and report parsing all come from the upstream repository unchanged.
-"""
+"""A deterministic, seeded stand-in for the upstream LLM."""
 
 from __future__ import annotations
 
@@ -36,8 +18,7 @@ from tradingagents.agents import schemas
 # Analysis dates are pinned to the past; see README "Setup notes".
 TRADE_DATE = "2026-01-09"
 
-# Same argument shim as the upstream end-to-end fixture: every bound tool is
-# called exactly once with only the arguments its schema declares.
+# Same shim as the upstream fixture: each tool is called once with its declared args.
 ARGS = {
     "symbol": "NVDA", "ticker": "NVDA", "curr_date": TRADE_DATE,
     "start_date": "2026-01-02", "end_date": TRADE_DATE,
@@ -132,9 +113,7 @@ class SeedScriptedModel(BaseChatModel):
         self.stats["threads"].add(threading.current_thread().name)
         if had_tools:
             self.stats["tool_calls"].append(node)
-        # A tiny, deterministic amount of work per call. We deliberately do NOT
-        # sleep: absolute latency numbers would then be an artefact of the stub.
-        # Wall-clock latency is still reported, with that caveat in the report.
+        # No sleep: absolute latency would just be an artefact of the stub.
         rng = random.Random(self.seed * 7919 + len(self.stats["calls"]))
         _ = rng.random()
 

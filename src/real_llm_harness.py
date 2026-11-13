@@ -1,9 +1,4 @@
-"""Instrumentation for the real-LLM follow-up experiment.
-
-``TradingAgentsGraph`` accepts a ``callbacks`` list and forwards it to both
-model tiers, so call counts, token usage, latency and failures are measured
-through LangChain's public callback API. No upstream source file is changed.
-"""
+"""Instrumentation for the real-LLM follow-up experiment."""
 
 from __future__ import annotations
 

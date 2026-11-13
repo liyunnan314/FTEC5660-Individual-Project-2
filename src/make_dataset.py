@@ -1,12 +1,4 @@
-"""Generate the pinned synthetic OHLCV dataset used by every experiment run.
-
-Real price/news feeds need API keys and change over time, which would make the
-reproduction non-deterministic. We therefore pin a synthetic dataset to disk
-with a fixed seed. It is deliberately simple and is NOT a market simulation:
-its only job is to give the market analyst and the settlement layer stable,
-valid inputs. All alpha/return figures derived from it are illustrative of the
-pipeline's plumbing, never of trading performance.
-"""
+"""Generate the pinned synthetic OHLCV dataset used by every experiment run."""
 
 from __future__ import annotations
 

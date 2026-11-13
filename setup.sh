@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# One-step setup: clone & pin the upstream repo, create a venv, install deps.
-# No API keys are required or read.
+# Clone and pin upstream, create .venv, install deps. No API keys are read.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

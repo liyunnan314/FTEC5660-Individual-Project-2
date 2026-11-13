@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenerate every artefact from scratch, in dependency order.
+# Regenerate all artefacts in dependency order.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$ROOT"

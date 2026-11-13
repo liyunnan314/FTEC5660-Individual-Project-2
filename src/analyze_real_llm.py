@@ -1,8 +1,4 @@
-"""Summarize the live-DeepSeek follow-up experiment.
-
-Produces results/real_llm/summary.json (consumed by report/build_report.py),
-a human-readable comparison table, and Figure 3.
-"""
+"""Summarize the live-DeepSeek follow-up experiment."""
 
 from __future__ import annotations
 
@@ -83,7 +79,6 @@ summary = {
 }
 (SRC / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
-# ---------- comparison table ----------
 lines = [
     "# Follow-up experiment: live DeepSeek model",
     "",
@@ -133,7 +128,6 @@ lines += [
 ]
 (SRC / "comparison.md").write_text("\n".join(lines), encoding="utf-8")
 
-# ---------- Figure 3 ----------
 if pairs:
     labels = [p["date"][5:] for p in pairs]
     x = range(len(labels))

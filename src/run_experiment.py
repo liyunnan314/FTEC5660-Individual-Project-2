@@ -1,13 +1,4 @@
-"""Run the controlled reproduction experiment.
-
-Two arms differ in exactly ONE upstream config key: ``max_debate_rounds``
-(1 = upstream default, 3 = modification). Everything else is held fixed:
-same upstream commit, same pinned synthetic dataset, same scripted model
-class, same seeds, same ticker/date grid, same measurement code.
-
-Usage:
-    .venv/bin/python src/run_experiment.py --arm both --trials 5
-"""
+"""Run the controlled reproduction experiment."""
 
 from __future__ import annotations
 
@@ -25,8 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# Placeholder keys only. The real client factory is replaced at runtime, so no
-# credential is ever used or required. Nothing secret is written to disk.
+# Placeholder keys; the real client is replaced at runtime, so no credential is needed.
 for _key in ("OPENAI_API_KEY", "GOOGLE_API_KEY", "ANTHROPIC_API_KEY",
              "DEEPSEEK_API_KEY", "XAI_API_KEY", "ALPHA_VANTAGE_API_KEY",
              "FRED_API_KEY", "OPENROUTER_API_KEY"):
@@ -131,7 +121,6 @@ def main() -> int:
                       f"calls={rec.get('llm_calls', '-'):>3} "
                       f"rating={rec.get('signal', '-'):<11} {status}")
 
-    # ---- cell-level table ----
     import csv
     fields = ["arm", "trial", "date", "ticker", "seed", "max_debate_rounds",
               "success", "signal", "rating_legal", "signal_matches_state",
@@ -143,7 +132,6 @@ def main() -> int:
         w.writeheader()
         w.writerows(all_rows)
 
-    # ---- trial-level aggregate (the unit reported as mean/variance) ----
     trial_rows = []
     for arm in arms:
         for trial in range(args.trials):
@@ -170,7 +158,6 @@ def main() -> int:
         w.writeheader()
         w.writerows(trial_rows)
 
-    # ---- arm-level summary ----
     metrics = ["success_rate", "rating_legal_rate", "mean_llm_calls",
                "mean_tool_turns", "mean_tool_invocations",
                "mean_prompt_chars", "mean_data_methods",
@@ -190,7 +177,6 @@ def main() -> int:
         w.writeheader()
         w.writerows(summary_rows)
 
-    # ---- audit: prove the modification is isolated ----
     audit = {
         "upstream_repo": "https://github.com/TauricResearch/TradingAgents",
         "upstream_commit": "9fa1196fffbcfd9de5146d2dd2869df84ab99838",

@@ -1,9 +1,4 @@
-"""Dose-response diagnostic for the SAME single modification.
-
-Runs the identical offline cell with ``max_debate_rounds`` in 1..5. This is not
-a second modification: it characterises how the one changed parameter affects
-cost, which is what makes the modification's impact interpretable.
-"""
+"""Dose-response diagnostic for the SAME single modification."""
 
 from __future__ import annotations
 

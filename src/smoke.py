@@ -1,7 +1,4 @@
-"""One-shot sanity check: can the upstream graph reach a decision fully offline?
-
-Run after setup: `.venv/bin/python src/smoke.py`
-"""
+"""One-shot sanity check: can the upstream graph reach a decision fully offline?"""
 
 from __future__ import annotations
 

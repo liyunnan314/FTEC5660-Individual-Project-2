@@ -1,18 +1,4 @@
-"""Offline injection harness for the upstream TradingAgents pipeline.
-
-The upstream repository's own end-to-end test
-(``tests/test_graph_end_to_end.py::offline``) shows how to run the whole
-LangGraph pipeline without network or API keys: replace the LLM client and
-every data vendor. We reuse *exactly* that seam, with two additions that make
-the run measurable and repeatable:
-
-* a pinned, synthetic OHLCV dataset on disk (``data/synthetic_prices.csv``)
-  instead of an inline DataFrame, so the data vintage is checkable;
-* a call-counting scripted model (``SeedScriptedModel``).
-
-No upstream source file is modified. All replacements are applied at runtime
-through ``pytest.MonkeyPatch`` and undone after each trial.
-"""
+"""Offline injection harness for the upstream TradingAgents pipeline."""
 
 from __future__ import annotations
 
@@ -67,18 +53,11 @@ def closes_for(frame: pd.DataFrame, ticker: str) -> pd.Series:
 
 def install(mp: MonkeyPatch, model: SeedScriptedModel | None, dataset: pd.DataFrame,
             ticker: str, *, patch_llm: bool = True) -> set[str]:
-    """Apply all offline replacements; return the set of data methods reached.
-
-    ``patch_llm=False`` keeps the vendor injection but leaves the upstream
-    ``create_tier_client`` intact, so a real OpenAI-compatible model can be
-    used while the data vintage stays pinned. The default is unchanged, so the
-    offline experiment is bit-for-bit unaffected by this switch.
-    """
+    """Apply all offline replacements; return the set of data methods reached."""
     called: set[str] = set()
     prices = price_frame_for(dataset, ticker)
     closes = closes_for(dataset, ticker)
 
-    # 1. Every data vendor answers with a labelled synthetic payload.
     for method, vendors in router.VENDOR_METHODS.items():
         for vendor in list(vendors):
             mp.setitem(
@@ -86,7 +65,6 @@ def install(mp: MonkeyPatch, model: SeedScriptedModel | None, dataset: pd.DataFr
                 lambda *a, _m=method, **k: called.add(_m) or f"[{_m}: pinned synthetic data]",
             )
 
-    # 2. Price history and company identity.
     mp.setattr(snapshot, "load_ohlcv", lambda *a, **k: called.add("ohlcv") or prices.copy())
     mp.setattr(sentiment_analyst, "fetch_stocktwits_messages", lambda *a, **k: "no posts")
     mp.setattr(sentiment_analyst, "fetch_reddit_posts", lambda *a, **k: "no posts")
@@ -95,8 +73,7 @@ def install(mp: MonkeyPatch, model: SeedScriptedModel | None, dataset: pd.DataFr
     mp.setattr(settlement, "get_closes", lambda *a, **k: closes.copy())
     context._identity.cache_clear()
 
-    # 3. The controlled variable: the LLM client factory. With patch_llm=False
-    #    the upstream factory is left alone and a real model is used instead.
+    # patch_llm=False keeps the upstream client factory for use with a real model.
     if patch_llm:
         mp.setattr(trading_graph, "create_tier_client",
                    lambda config, tier, **k: _StubClient(model))

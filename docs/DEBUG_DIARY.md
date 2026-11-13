@@ -1,4 +1,4 @@
-# Debug diary (full version)
+# Debug diary
 
 Condensed into §6 of `report/reproducibility_report.pdf`. This file keeps the
 evidence and commands for anyone re-running the study.
@@ -10,9 +10,9 @@ evidence and commands for anyone re-running the study.
 | 3 | `Obtaining file:///workspace … neither 'setup.py' nor 'pyproject.toml' found` | Background shell's cwd was `/workspace`, not the cloned repo | Used the absolute path to the editable install | `setup.sh` |
 | 4 | A piped `… \| tail -40` returned exit code 0 even though the install failed | Pipeline exit code is `tail`'s | `set -o pipefail` / explicit import check after install | `setup.sh` step 3 |
 | 5 | `ModuleNotFoundError: No module named 'langchain_core'` when running the upstream tests | Dependency install had aborted at #2 | Reinstalled inside `.venv` | `upstream_test_output.txt`: 15 passed |
-| 6 | No `DEEPSEEK_API_KEY` / `OPENAI_API_KEY` / any provider key in the sandbox **at the time of the primary study** | Environment had no credentials then | Treated the LLM as a controlled variable; injected `SeedScriptedModel` through `trading_graph.create_tier_client` — the seam used by the authors' own `tests/test_graph_end_to_end.py` | `src/scripted_model.py`, `src/offline_harness.py` |
+| 6 | No `DEEPSEEK_API_KEY` / `OPENAI_API_KEY` / any provider key in the sandbox at the time of the primary study | Environment had no credentials then | Treated the LLM as a controlled variable; injected `SeedScriptedModel` through `trading_graph.create_tier_client` — the seam used by the authors' own `tests/test_graph_end_to_end.py` | `src/scripted_model.py`, `src/offline_harness.py` |
 | 7 | Live yfinance / SEC EDGAR / Reddit / StockTwits / FRED calls would hang | No network access for data vendors, and the upstream test suite blocks sockets | Replaced `router.VENDOR_METHODS`, `snapshot.load_ohlcv`, `settlement.get_closes`, `yahoo_market.yf.Ticker`, StockTwits/Reddit fetchers; pinned a synthetic OHLCV CSV | `offline_harness.py`, `DATASET.md` |
-| 8 | `Research Manager: provider does not support with_structured_output (); falling back to free-text generation` (4 lines/run) | The scripted stub raises `NotImplementedError` for structured output; the upstream has a documented free-text fallback | Confirmed it is a fallback, not a failure; disabled warning logging **in my harness only**. Also ran the structured path and confirmed identical call counts (15) | `smoke.py`, `run_experiment.py` |
+| 8 | `Research Manager: provider does not support with_structured_output (); falling back to free-text generation` (4 lines/run) | The scripted stub raises `NotImplementedError` for structured output; the upstream has a documented free-text fallback | Confirmed it is a fallback, not a failure; disabled warning logging in my harness only. Also ran the structured path and confirmed identical call counts (15) | `smoke.py`, `run_experiment.py` |
 | 9 | `iter_grid` clamps to today; settlement needs 5 trading days after each decision | Upstream point-in-time integrity rules | Chose 3 past dates inside the pinned dataset that leave a full holding window; each cell gets its own work dir | `run_experiment.py` `DATES` |
 | 10 | First metric counted tool-call *turns* (3), not individual tool calls; paper reports "20+ tool calls" | Counting-convention mismatch | Added `tool_invocations` to the stub and re-ran all 30 cells → 12 invocations/run, reported as a lower bound | `cells.csv` |
 | 11 | An earlier modification candidate (disabling memory) risked showing no effect with an empty memory log | Weak measurability | Ran a 1–5 round dose-response first; the clean `13 + 2R` relationship is why `max_debate_rounds` was chosen | `rounds_sweep.csv` |
@@ -39,5 +39,5 @@ DEEPSEEK_API_KEY=... .venv/bin/python src/run_real_llm.py --arm both --trials 1
 .venv/bin/python report/build_report.py     # adds section 5.4 / Figure 4
 ```
 
-Logs are kept in `results/tables/` and `results/real_llm/run_log.txt`. in `results/tables/experiment_log.txt`, `sweep_log.txt`,
-`analyze_log.txt` and `upstream_test_output.txt`.
+Logs: `results/tables/experiment_log.txt`, `sweep_log.txt`, `analyze_log.txt`,
+`upstream_test_output.txt` and `results/real_llm/run_log.txt`.

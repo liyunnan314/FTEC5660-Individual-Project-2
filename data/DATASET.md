@@ -8,4 +8,4 @@
 
 Regenerate with `python src/make_dataset.py`. The upstream data vendors are replaced at runtime by `src/offline_harness.py`; no live market, news or social data is fetched during the experiments.
 
-**This is synthetic data.** Any return/alpha computed from it measures only that the evaluation plumbing runs, not trading performance.
+This is synthetic data. Any return/alpha computed from it measures only that the evaluation plumbing runs, not trading performance.

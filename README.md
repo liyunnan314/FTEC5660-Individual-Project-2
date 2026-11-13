@@ -1,16 +1,16 @@
 # FTEC5660 Reproducibility Work — TradingAgents
 
-**Course:** Agentic AI for Business and FinTech (FTEC5660) · **Due:** 13 November 2026
-**Target:** [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) @ `9fa1196` (v0.7.1), Tier A, No. 22 in the instructor's list
-**Paper:** Xiao et al., [arXiv:2412.20138v7](https://arxiv.org/abs/2412.20138)
+Course: Agentic AI for Business and FinTech (FTEC5660) · Due: 13 November 2026
+Target: [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) @ `9fa1196` (v0.7.1), Tier A, No. 22 in the instructor's list
+Paper: Xiao et al., [arXiv:2412.20138v7](https://arxiv.org/abs/2412.20138)
 
-> I reproduced the **structural** claim of TradingAgents — that the complete
+> I reproduced the structural claim of TradingAgents — that the complete
 > LangGraph multi-agent pipeline runs end to end and reaches a logged decision —
 > using the authors' own offline test seam, a deterministic scripted LLM and a
-> pinned synthetic dataset. Then I changed **one** config key
+> pinned synthetic dataset. Then I changed one config key
 > (`max_debate_rounds` 1 → 3) and measured its impact. A second experiment
-> repeated the same grid with a live **DeepSeek** model (report §5.4).
-> The paper's trading-return table is explicitly reported as **not reproducible**,
+> repeated the same grid with a live DeepSeek model (report §5.4).
+> The paper's trading-return table is reported as not reproducible,
 > with the reasons documented.
 
 ---
@@ -19,39 +19,39 @@
 
 | Check | Result |
 |---|---|
-| Upstream end-to-end test suite | **15/15 passing** |
-| Instrumented pipeline runs | **30/30 successful**, 30/30 legal final ratings |
-| Data/tool methods reached per run | **12/12** |
-| Report fields non-empty per run | **7/7** |
-| Modification | `max_debate_rounds` **1 → 3** (single isolated change) |
-| LLM calls per run | **15 → 19** (+26.7%) |
-| Prompt characters per run | **48,492 → 61,286** (+26.4%) |
-| Bull/Bear debate turns | **1 → 3** (+200%) |
-| Decision distribution | **unchanged** |
-| Live DeepSeek follow-up (§5.4) | **6/6** legal decisions, **0/3** decisions changed, **+70%** tokens (166k → 283k); see `results/real_llm/comparison.md` |
-| Paper's CR / Sharpe / MDD table | **not reproducible** (see below) |
+| Upstream end-to-end test suite | 15/15 passing |
+| Instrumented pipeline runs | 30/30 successful, 30/30 legal final ratings |
+| Data/tool methods reached per run | 12/12 |
+| Report fields non-empty per run | 7/7 |
+| Modification | `max_debate_rounds` 1 → 3 (single isolated change) |
+| LLM calls per run | 15 → 19 (+26.7%) |
+| Prompt characters per run | 48,492 → 61,286 (+26.4%) |
+| Bull/Bear debate turns | 1 → 3 (+200%) |
+| Decision distribution | unchanged |
+| Live DeepSeek follow-up (§5.4) | 6/6 legal decisions, 0/3 decisions changed, +70% tokens (166k → 283k); see `results/real_llm/comparison.md` |
+| Paper's CR / Sharpe / MDD table | not reproducible (see below) |
 
-Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_report.pdf) (9 pages, A4).
+Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_report.pdf) (8 pages, A4).
 
 ---
 
 ## Submission package
 
-The assignment requires three items. This repository contains everything that
-can be produced programmatically:
+The assignment requires three items. The report is here; the GitHub link and the
+recording need to be produced by the student.
 
 | # | Required item | Status here |
 |---|---|---|
-| 1 | Brief report (max 10 pages) | ✅ `report/reproducibility_report.pdf` (9 pp) + editable `report/reproducibility_report.html` |
-| 2 | GitHub link: clear README, changes in commits, no secrets | ✅ This repo, with staged, reviewable commits (see `git log`) and `.gitignore`. **You still need to push it** — see [Publishing](#publishing-to-github). |
-| 3 | Recorded Zoom presentation (max 15 min) | ✅ Script + slides prepared in `presentation/`. **You still need to record the video** — see [Presentation](#presentation-15-minutes). |
+| 1 | Brief report (max 10 pages) | ✅ `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
+| 2 | GitHub link: clear README, changes in commits, no secrets | ✅ This repo, with staged, reviewable commits (see `git log`) and `.gitignore`. You still need to push it — see [Publishing](#publishing-to-github). |
+| 3 | Recorded Zoom presentation (max 15 min) | ✅ Script + slides prepared in `presentation/`. You still need to record the video — see [Presentation](#presentation-13-minutes). |
 
 ---
 
 ## Quickstart
 
-Requirements: Python 3.11+, git, internet for the one-time clone. **The primary study
-needs no API key, no GPU and no paid service.** The optional §5.4 follow-up needs a
+Requirements: Python 3.11+, git, internet for the one-time clone. The primary study
+needs no API key, no GPU and no paid service. The optional §5.4 follow-up needs a
 DeepSeek key (read from the environment, never stored).
 
 ```bash
@@ -79,7 +79,7 @@ export DEEPSEEK_API_KEY=...            # never commit this
 .venv/bin/python report/build_report.py
 ```
 
-Each live run takes ~5 minutes, so `run_all.sh` deliberately does not include this step.
+Each live run takes ~5 minutes, so `run_all.sh` leaves this step out.
 
 Expected output of `smoke.py` (abridged):
 
@@ -93,7 +93,7 @@ Expected output of `smoke.py` (abridged):
 ```
 
 Everything runs offline after `setup.sh`: the LLM client factory and all data
-vendors are replaced at runtime. **No upstream source file is edited.**
+vendors are replaced at runtime. No upstream source file is edited.
 
 ---
 
@@ -130,27 +130,27 @@ vendor/             upstream clone (gitignored, pinned to 9fa1196)
 
 ## What was reproduced, and what was not
 
-**Reproduced.** The upstream repository claims (in the docstring of
+Reproduced. The upstream repository claims (in the docstring of
 `tests/test_graph_end_to_end.py`) that "the whole graph, end to end … every
 tool-using analyst calls each of its tools once … the debates and managers run,
 and the decision is parsed and logged". That claim, its 15 upstream assertions,
 the 12 tool/data methods, the 7 report fields and the legal-decision behaviour
 all reproduce under a deterministic stub LLM and pinned data.
 
-**Not reproduced.** The paper's Table 1 (AAPL CR 26.62% / SR 8.21 / MDD 0.91%,
+Not reproduced. The paper's Table 1 (AAPL CR 26.62% / SR 8.21 / MDD 0.91%,
 etc.). Three independent causes:
 
-1. **Model drift** — the paper uses `gpt-4o` / `o1-preview`; this work uses a
+1. Model drift — the paper uses `gpt-4o` / `o1-preview`; this work uses a
    deterministic stub and, in §5.4, `deepseek-flash`, neither of which is the paper's
    model. *Results are not directly comparable to the paper because the underlying LLM differs.*
-2. **Code drift** — `tradingagents/backtest.py` in v0.7.1 explicitly says
+2. Code drift — `tradingagents/backtest.py` in v0.7.1 says
    *"It is not a portfolio simulator … none of which the system has"*. The
    simulated broker with a cash ledger that produced Table 1 no longer ships;
    `summarize()` now scores direction hit-rate and mean alpha instead. The
    headline table therefore cannot be emitted by the released code at all.
-3. **Data drift** — the 2024 multimodal snapshot is unavailable; current feeds
-   are live and time-varying. We pin synthetic data and clearly label any
-   return-like number as plumbing-only, never as performance.
+3. Data drift — the 2024 multimodal snapshot is unavailable; current feeds
+   are live and time-varying. Pinning synthetic data removes this source of variation, but any return-like
+   number from it says nothing about trading performance.
 
 The README's own *Reproducibility* section agrees: "Backtest results are not
 guaranteed to match any published figure … Treat the framework as a research
@@ -223,7 +223,7 @@ git push -u origin main
 ```
 
 That needs credentials for the `liyunnan314` account (a repo-scoped Personal
-Access Token works); **no token is stored in this repository**. If you are
+Access Token works); no token is stored in this repository. If you are
 re-creating the repo from scratch, first run `git remote add origin
 https://github.com/liyunnan314/ftec5660-reproducibility.git` and
 `git branch -M main`. Then paste the public URL into the submission. Do not
@@ -232,9 +232,9 @@ in `setup.sh`, so the repo stays small and reviewable.
 
 ---
 
-## Presentation (15 minutes)
+## Presentation (13 minutes)
 
-- `presentation/slides.html` — 11 slides, self-contained, open in a browser
+- `presentation/slides.html` — 12 slides, self-contained, open in a browser
   (also exported to `presentation/slides.pdf`).
 - `presentation/speaker_script.md` — timed speaker notes covering exactly what
   the brief asks: what was attempted, the modification and its measured impact,
@@ -247,8 +247,7 @@ recording link.
 
 ## Upgrading to a real LLM
 
-This is no longer hypothetical. Report §5.4 repeats the grid with a live
-`deepseek-flash` model: 6 paired runs with real token and latency measurements,
+Report §5.4 repeats the grid with a live `deepseek-flash` model: 6 paired runs with real token and latency measurements,
 archived raw responses, and a paired-decision comparison. See
 [`docs/REAL_LLM_UPGRADE.md`](docs/REAL_LLM_UPGRADE.md) for the exact config-only
 switch, the decoding parameters that were logged, and which paper results remain

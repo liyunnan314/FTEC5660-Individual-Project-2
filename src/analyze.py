@@ -41,7 +41,6 @@ def main() -> None:
     b_trials = [r for r in trials if r["arm"] == "baseline"]
     m_trials = [r for r in trials if r["arm"] == "modified"]
 
-    # ---------------- Figure 1: arm comparison (2x2) ----------------
     fig, axes = plt.subplots(2, 2, figsize=(9.2, 6.6))
     panels = [
         ("llm_calls", "LLM calls per run", "calls"),
@@ -72,7 +71,6 @@ def main() -> None:
     fig.savefig(F / "fig1_arm_comparison.png", dpi=160)
     plt.close(fig)
 
-    # ---------------- Figure 2: dose-response ----------------
     rounds = [int(r["max_debate_rounds"]) for r in sweep]
     calls = [int(r["llm_calls"]) for r in sweep]
     chars = [int(r["prompt_chars"]) for r in sweep]
@@ -99,7 +97,6 @@ def main() -> None:
     fig.savefig(F / "fig2_rounds_dose_response.png", dpi=160)
     plt.close(fig)
 
-    # ---------------- Figure 3: decision distribution ----------------
     rating_order = ["Buy", "Overweight", "Hold", "Underweight", "Sell"]
     b_counts = Counter(r["signal"] for r in b_cells)
     m_counts = Counter(r["signal"] for r in m_cells)
@@ -122,7 +119,6 @@ def main() -> None:
     fig.savefig(F / "fig3_decision_distribution.png", dpi=160)
     plt.close(fig)
 
-    # ---------------- Tables ----------------
     def trial_stats(rows, key):
         vals = [num(r, key) for r in rows]
         return statistics.mean(vals), statistics.pstdev(vals)

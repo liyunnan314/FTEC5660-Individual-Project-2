@@ -1,17 +1,4 @@
-"""Real-LLM follow-up experiment (Edge Case A, with a live DeepSeek key).
-
-This answers the one question the offline stub cannot: does debate depth change
-the *decision* when the agents are driven by a real model? The controlled
-variable is the model alone — same upstream commit, same pinned synthetic data
-vintage, same ticker/date grid, same metric definitions and the same
-``configs/*.json`` arms as ``src/run_experiment.py``.
-
-Usage (key is read from the environment, never stored in the repo):
-
-    export DEEPSEEK_API_KEY=...                # never commit this
-    .venv/bin/python src/run_real_llm.py --arm both --trials 1
-    .venv/bin/python src/run_real_llm.py --arm baseline --dates 1   # smoke
-"""
+"""Real-LLM follow-up experiment (Edge Case A, with a live DeepSeek key)."""
 
 from __future__ import annotations
 
@@ -33,7 +20,6 @@ if not os.environ.get("DEEPSEEK_API_KEY"):
     raise SystemExit("DEEPSEEK_API_KEY is not set; see docs/REAL_LLM_UPGRADE.md")
 
 # Placeholders stop upstream constructors from probing for absent credentials.
-# The DeepSeek key above is the only real credential used.
 for _key in ("OPENAI_API_KEY", "GOOGLE_API_KEY", "ANTHROPIC_API_KEY",
              "XAI_API_KEY", "ALPHA_VANTAGE_API_KEY", "FRED_API_KEY",
              "OPENROUTER_API_KEY"):
@@ -58,8 +44,7 @@ ARMS = {
     for arm in ("baseline", "modified")
 }
 
-# The ONLY difference from the offline experiment: the model. Both tiers use
-# the same model so the "deep thinking" tier is not a second confound.
+# The model is the only difference; both tiers use the same one.
 REAL_LLM_CONFIG = {
     "llm_provider": "deepseek",
     "quick_think_llm": "deepseek-flash",
@@ -139,7 +124,7 @@ def run_cell(dataset, arm: str, trial: int, date: str, work_dir: Path) -> tuple[
                if k in ("llm_calls", "input_tokens", "output_tokens", "total_tokens",
                         "prompt_chars", "llm_seconds", "llm_errors")},
         })
-    except Exception as exc:  # keep the grid running; report the failure honestly
+    except Exception as exc:  # keep the grid running
         record["error"] = f"{type(exc).__name__}: {exc}"[:500]
         raw = {"error": record["error"]}
     finally:
