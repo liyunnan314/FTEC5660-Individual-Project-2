@@ -8,9 +8,10 @@
 > LangGraph multi-agent pipeline runs end to end and reaches a logged decision —
 > using the authors' own offline test seam, a deterministic scripted LLM and a
 > pinned synthetic dataset. Then I changed **one** config key
-> (`max_debate_rounds` 1 → 3) and measured its impact. No LLM API key was
-> available, so the paper's trading-return table is explicitly reported as
-> **not reproducible**, with the reasons documented.
+> (`max_debate_rounds` 1 → 3) and measured its impact. A second experiment
+> repeated the same grid with a live **DeepSeek** model (report §5.4).
+> The paper's trading-return table is explicitly reported as **not reproducible**,
+> with the reasons documented.
 
 ---
 
@@ -27,9 +28,10 @@
 | Prompt characters per run | **48,492 → 61,286** (+26.4%) |
 | Bull/Bear debate turns | **1 → 3** (+200%) |
 | Decision distribution | **unchanged** |
+| Live DeepSeek follow-up (§5.4) | **6/6** legal decisions, **0/3** decisions changed, **+70%** tokens (166k → 283k); see `results/real_llm/comparison.md` |
 | Paper's CR / Sharpe / MDD table | **not reproducible** (see below) |
 
-Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_report.pdf) (8 pages, A4).
+Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_report.pdf) (9 pages, A4).
 
 ---
 
@@ -40,7 +42,7 @@ can be produced programmatically:
 
 | # | Required item | Status here |
 |---|---|---|
-| 1 | Brief report (max 10 pages) | ✅ `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
+| 1 | Brief report (max 10 pages) | ✅ `report/reproducibility_report.pdf` (9 pp) + editable `report/reproducibility_report.html` |
 | 2 | GitHub link: clear README, changes in commits, no secrets | ✅ This repo, with staged, reviewable commits (see `git log`) and `.gitignore`. **You still need to push it** — see [Publishing](#publishing-to-github). |
 | 3 | Recorded Zoom presentation (max 15 min) | ✅ Script + slides prepared in `presentation/`. **You still need to record the video** — see [Presentation](#presentation-15-minutes). |
 
@@ -48,8 +50,9 @@ can be produced programmatically:
 
 ## Quickstart
 
-Requirements: Python 3.11+, git, internet for the one-time clone. **No API key,
-no GPU, no paid service.**
+Requirements: Python 3.11+, git, internet for the one-time clone. **The primary study
+needs no API key, no GPU and no paid service.** The optional §5.4 follow-up needs a
+DeepSeek key (read from the environment, never stored).
 
 ```bash
 git clone <your-fork-url> ftec5660-reproducibility
@@ -66,6 +69,17 @@ bash setup.sh                     # clone+pin upstream, create .venv, install de
 ```
 
 Or run the whole chain at once: `bash run_all.sh`.
+
+Optional live-model follow-up (report §5.4). Same grid, same data, only the LLM changes:
+
+```bash
+export DEEPSEEK_API_KEY=...            # never commit this
+.venv/bin/python src/run_real_llm.py --arm both --trials 1
+.venv/bin/python src/analyze_real_llm.py
+.venv/bin/python report/build_report.py
+```
+
+Each live run takes ~5 minutes, so `run_all.sh` deliberately does not include this step.
 
 Expected output of `smoke.py` (abridged):
 
@@ -96,11 +110,16 @@ src/
   run_experiment.py   5 paired trials x 3 cells x 2 arms = 30 runs
   sweep_rounds.py     dose-response of the same single change
   analyze.py          CSV tables + 3 PNG figures + report_numbers.json
+  real_llm_harness.py  LangChain callback: calls, tokens, latency, errors
+  run_real_llm.py      live-model paired grid (needs DEEPSEEK_API_KEY)
+  analyze_real_llm.py  §5.4 tables, summary.json and Figure 4
 results/
   raw/                per-cell metrics.json (all 30 runs + sweep)
   tables/             cells.csv, trials.csv, summary.csv, comparison.md,
                       experiment_audit.json, upstream_test_output.txt, logs
-  figures/            fig1..fig3 PNG
+  figures/            fig1..fig4 PNG
+  real_llm/           cells.csv, summary.json, comparison.md, config_record.json,
+                      raw_responses.json (archived for re-scoring)
 report/             build_report.py, reproducibility_report.{html,pdf}
 presentation/       slides.html, slides.pdf, speaker_script.md
 docs/               REAL_LLM_UPGRADE.md, DEBUG_DIARY.md
@@ -121,9 +140,9 @@ all reproduce under a deterministic stub LLM and pinned data.
 **Not reproduced.** The paper's Table 1 (AAPL CR 26.62% / SR 8.21 / MDD 0.91%,
 etc.). Three independent causes:
 
-1. **Model drift** — the paper uses `gpt-4o` / `o1-preview`; no LLM API key is
-   available, so the reasoning layer is replaced by a deterministic stub.
-   *Results are not directly comparable to the paper because the underlying LLM differs.*
+1. **Model drift** — the paper uses `gpt-4o` / `o1-preview`; this work uses a
+   deterministic stub and, in §5.4, `deepseek-flash`, neither of which is the paper's
+   model. *Results are not directly comparable to the paper because the underlying LLM differs.*
 2. **Code drift** — `tradingagents/backtest.py` in v0.7.1 explicitly says
    *"It is not a portfolio simulator … none of which the system has"*. The
    simulated broker with a cash ledger that produced Table 1 no longer ships;
@@ -165,12 +184,13 @@ machine-readably. The modification is in its own git commit.
 | Upstream version | 0.7.1 |
 | Python | 3.11.1 (isolated venv) |
 | Dataset | `data/synthetic_prices.csv`, seed `20261113`, sha256 in `data/DATASET.md` |
-| Model | `seed-scripted-stub-v1` (in-process, deterministic), temperature/top-p/max-tokens n/a |
+| Model (primary) | `seed-scripted-stub-v1` (in-process, deterministic), temperature/top-p/max-tokens n/a |
+| Model (§5.4) | `deepseek-flash` on both tiers, provider `deepseek`, base URL `https://api.deepseek.com/v1`, temperature 0.0, max_tokens 2048 |
 | Prompts / templates | unchanged from upstream |
 | Seeds | 0, 1, 2, 3, 4 (paired across arms) |
 | Grid | NVDA × {2025-12-15, 2025-12-22, 2026-01-05} |
 | Trials | 5 per arm; 15 cells per arm; 30 runs total |
-| API keys | none (placeholder strings only) |
+| API keys | none in the primary study; `DEEPSEEK_API_KEY` used at run time only for §5.4, value never recorded |
 
 To verify the dataset has not changed: `sha256sum data/synthetic_prices.csv`
 against `data/DATASET.md`.
@@ -181,8 +201,10 @@ against `data/DATASET.md`.
 
 `.env.example` contains only the literal `placeholder-not-a-real-key`. The
 offline harness replaces the LLM client before any credential is used, and
-`.env`, `.venv/` and `vendor/` are gitignored. There is no `sk-…` string,
-token, or personal credential anywhere in the tracked files. Verify with:
+`.env`, `.venv/`, `vendor/` and `results/real_llm/work/` are gitignored. The live key is
+read from the environment at run time and never written to disk; `config_record.json`
+records only the word "present". There is no `sk-…` string, token, or personal
+credential anywhere in the tracked files. Verify with:
 
 ```bash
 git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}' || echo "clean"
@@ -192,18 +214,21 @@ git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}'
 
 ## Publishing to GitHub
 
-This repository is already initialised with clean, incremental commits
-(`git log --oneline`). To make it a public link:
+This repository is already on branch `main` with `origin` pointing at
+`https://github.com/liyunnan314/ftec5660-reproducibility.git`, with clean,
+incremental commits (`git log --oneline`). Publish it with one command:
 
 ```bash
-git remote add origin https://github.com/<your-account>/ftec5660-reproducibility.git
-git branch -M main
 git push -u origin main
 ```
 
-Then paste that URL into the submission. Do **not** commit `.env`, `.venv/` or
-`vendor/`. The upstream code is pinned by commit hash in `setup.sh`, so the repo
-stays small and reviewable.
+That needs credentials for the `liyunnan314` account (a repo-scoped Personal
+Access Token works); **no token is stored in this repository**. If you are
+re-creating the repo from scratch, first run `git remote add origin
+https://github.com/liyunnan314/ftec5660-reproducibility.git` and
+`git branch -M main`. Then paste the public URL into the submission. Do not
+commit `.env`, `.venv/` or `vendor/`. The upstream code is pinned by commit hash
+in `setup.sh`, so the repo stays small and reviewable.
 
 ---
 
@@ -222,10 +247,12 @@ recording link.
 
 ## Upgrading to a real LLM
 
-See [`docs/REAL_LLM_UPGRADE.md`](docs/REAL_LLM_UPGRADE.md) for the config-only
-switch to DeepSeek (or any OpenAI-compatible endpoint), which the assignment's
-Edge Case A explicitly allows. It lists the exact env vars and the decoding
-parameters you must log, and explains which results would become comparable.
+This is no longer hypothetical. Report §5.4 repeats the grid with a live
+`deepseek-flash` model: 6 paired runs with real token and latency measurements,
+archived raw responses, and a paired-decision comparison. See
+[`docs/REAL_LLM_UPGRADE.md`](docs/REAL_LLM_UPGRADE.md) for the exact config-only
+switch, the decoding parameters that were logged, and which paper results remain
+out of reach even with a key.
 
 ---
 
