@@ -1,0 +1,32 @@
+[baseline] trial=0 date=2025-12-15 calls= 15 rating=Buy         OK
+[baseline] trial=0 date=2025-12-22 calls= 15 rating=Buy         OK
+[baseline] trial=0 date=2026-01-05 calls= 15 rating=Buy         OK
+[baseline] trial=1 date=2025-12-15 calls= 15 rating=Overweight  OK
+[baseline] trial=1 date=2025-12-22 calls= 15 rating=Overweight  OK
+[baseline] trial=1 date=2026-01-05 calls= 15 rating=Overweight  OK
+[baseline] trial=2 date=2025-12-15 calls= 15 rating=Hold        OK
+[baseline] trial=2 date=2025-12-22 calls= 15 rating=Hold        OK
+[baseline] trial=2 date=2026-01-05 calls= 15 rating=Hold        OK
+[baseline] trial=3 date=2025-12-15 calls= 15 rating=Underweight OK
+[baseline] trial=3 date=2025-12-22 calls= 15 rating=Underweight OK
+[baseline] trial=3 date=2026-01-05 calls= 15 rating=Underweight OK
+[baseline] trial=4 date=2025-12-15 calls= 15 rating=Sell        OK
+[baseline] trial=4 date=2025-12-22 calls= 15 rating=Sell        OK
+[baseline] trial=4 date=2026-01-05 calls= 15 rating=Sell        OK
+[modified] trial=0 date=2025-12-15 calls= 19 rating=Buy         OK
+[modified] trial=0 date=2025-12-22 calls= 19 rating=Buy         OK
+[modified] trial=0 date=2026-01-05 calls= 19 rating=Buy         OK
+[modified] trial=1 date=2025-12-15 calls= 19 rating=Overweight  OK
+[modified] trial=1 date=2025-12-22 calls= 19 rating=Overweight  OK
+[modified] trial=1 date=2026-01-05 calls= 19 rating=Overweight  OK
+[modified] trial=2 date=2025-12-15 calls= 19 rating=Hold        OK
+[modified] trial=2 date=2025-12-22 calls= 19 rating=Hold        OK
+[modified] trial=2 date=2026-01-05 calls= 19 rating=Hold        OK
+[modified] trial=3 date=2025-12-15 calls= 19 rating=Underweight OK
+[modified] trial=3 date=2025-12-22 calls= 19 rating=Underweight OK
+[modified] trial=3 date=2026-01-05 calls= 19 rating=Underweight OK
+[modified] trial=4 date=2025-12-15 calls= 19 rating=Sell        OK
+[modified] trial=4 date=2025-12-22 calls= 19 rating=Sell        OK
+[modified] trial=4 date=2026-01-05 calls= 19 rating=Sell        OK
+
+wrote 30 cell records -> /workspace/ftec5660-reproducibility/results/tables

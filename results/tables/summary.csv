@@ -1,0 +1,3 @@
+arm,max_debate_rounds,trials,success_rate_mean,success_rate_std,rating_legal_rate_mean,rating_legal_rate_std,mean_llm_calls_mean,mean_llm_calls_std,mean_tool_turns_mean,mean_tool_turns_std,mean_tool_invocations_mean,mean_tool_invocations_std,mean_prompt_chars_mean,mean_prompt_chars_std,mean_data_methods_mean,mean_data_methods_std,mean_reports_mean,mean_reports_std,mean_bull_calls_mean,mean_bull_calls_std,mean_bear_calls_mean,mean_bear_calls_std,mean_elapsed_s_mean,mean_elapsed_s_std
+baseline,1,5,1.0,0.0,1.0,0.0,15,0.0,3,0.0,12,0.0,48491.666667,136.235091,12,0.0,7,0.0,1,0.0,1,0.0,0.041738,0.010292
+modified,3,5,1.0,0.0,1.0,0.0,19,0.0,3,0.0,12,0.0,61285.666667,265.658427,12,0.0,7,0.0,3,0.0,3,0.0,0.036615,0.000976

@@ -1,0 +1,11 @@
+arm,trial,cells,cells_ok,success_rate,rating_legal_rate,mean_llm_calls,mean_tool_turns,mean_tool_invocations,mean_prompt_chars,mean_data_methods,mean_reports,mean_bull_calls,mean_bear_calls,mean_elapsed_s,ratings
+baseline,0,3,3,1.0,1.0,15,3,12,48331.666666666664,12,7,1,1,0.04102,"Buy,Buy,Buy"
+baseline,1,3,3,1.0,1.0,15,3,12,48611.666666666664,12,7,1,1,0.03544,"Overweight,Overweight,Overweight"
+baseline,2,3,3,1.0,1.0,15,3,12,48411.666666666664,12,7,1,1,0.036414999999999996,"Hold,Hold,Hold"
+baseline,3,3,3,1.0,1.0,15,3,12,48691.666666666664,12,7,1,1,0.034034666666666664,"Underweight,Underweight,Underweight"
+baseline,4,3,3,1.0,1.0,15,3,12,48411.666666666664,12,7,1,1,0.061782000000000004,"Sell,Sell,Sell"
+modified,0,3,3,1.0,1.0,19,3,12,60973.666666666664,12,7,3,3,0.03516933333333334,"Buy,Buy,Buy"
+modified,1,3,3,1.0,1.0,19,3,12,61519.666666666664,12,7,3,3,0.036971000000000004,"Overweight,Overweight,Overweight"
+modified,2,3,3,1.0,1.0,19,3,12,61129.666666666664,12,7,3,3,0.038121,"Hold,Hold,Hold"
+modified,3,3,3,1.0,1.0,19,3,12,61675.666666666664,12,7,3,3,0.03671166666666667,"Underweight,Underweight,Underweight"
+modified,4,3,3,1.0,1.0,19,3,12,61129.666666666664,12,7,3,3,0.0361,"Sell,Sell,Sell"

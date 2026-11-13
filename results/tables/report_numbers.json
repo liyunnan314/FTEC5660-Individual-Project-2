@@ -1,0 +1,125 @@
+{
+  "success_rate": {
+    "baseline_mean": 1.0,
+    "baseline_std": 0.0,
+    "modified_mean": 1.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "rating_legal_rate": {
+    "baseline_mean": 1.0,
+    "baseline_std": 0.0,
+    "modified_mean": 1.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "mean_llm_calls": {
+    "baseline_mean": 15.0,
+    "baseline_std": 0.0,
+    "modified_mean": 19.0,
+    "modified_std": 0.0,
+    "delta": 4.0,
+    "pct": 26.666666666666668
+  },
+  "mean_tool_turns": {
+    "baseline_mean": 3.0,
+    "baseline_std": 0.0,
+    "modified_mean": 3.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "mean_tool_invocations": {
+    "baseline_mean": 12.0,
+    "baseline_std": 0.0,
+    "modified_mean": 12.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "mean_prompt_chars": {
+    "baseline_mean": 48491.666666666664,
+    "baseline_std": 136.23509092741122,
+    "modified_mean": 61285.666666666664,
+    "modified_std": 265.65842730845185,
+    "delta": 12794.0,
+    "pct": 26.3839147619866
+  },
+  "mean_data_methods": {
+    "baseline_mean": 12.0,
+    "baseline_std": 0.0,
+    "modified_mean": 12.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "mean_reports": {
+    "baseline_mean": 7.0,
+    "baseline_std": 0.0,
+    "modified_mean": 7.0,
+    "modified_std": 0.0,
+    "delta": 0.0,
+    "pct": 0.0
+  },
+  "mean_bull_calls": {
+    "baseline_mean": 1.0,
+    "baseline_std": 0.0,
+    "modified_mean": 3.0,
+    "modified_std": 0.0,
+    "delta": 2.0,
+    "pct": 200.0
+  },
+  "mean_elapsed_s": {
+    "baseline_mean": 0.041738333333333336,
+    "baseline_std": 0.010291918546985194,
+    "modified_mean": 0.036614600000000004,
+    "modified_std": 0.000975632385230785,
+    "delta": -0.0051237333333333315,
+    "pct": -12.275845545661458
+  },
+  "dose_response": {
+    "rounds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "llm_calls": [
+      15,
+      17,
+      19,
+      21,
+      23
+    ],
+    "prompt_chars": [
+      48330,
+      54367,
+      60972,
+      68145,
+      75886
+    ],
+    "calls_slope": 2.0
+  },
+  "cells_total": 30,
+  "cells_success": 30,
+  "trials": 5,
+  "decision_distribution": {
+    "baseline": {
+      "Buy": 3,
+      "Overweight": 3,
+      "Hold": 3,
+      "Underweight": 3,
+      "Sell": 3
+    },
+    "modified": {
+      "Buy": 3,
+      "Overweight": 3,
+      "Hold": 3,
+      "Underweight": 3,
+      "Sell": 3
+    }
+  }
+}

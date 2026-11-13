@@ -1,0 +1,6 @@
+max_debate_rounds,llm_calls,bull_calls,bear_calls,prompt_chars,signal,reports_nonempty
+1,15,1,1,48330,Buy,7
+2,17,2,2,54367,Buy,7
+3,19,3,3,60972,Buy,7
+4,21,4,4,68145,Buy,7
+5,23,5,5,75886,Buy,7

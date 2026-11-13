@@ -1,0 +1,12 @@
+wrote figures: fig1_arm_comparison.png, fig2_rounds_dose_response.png, fig3_decision_distribution.png
+wrote tables: comparison.md, report_numbers.json
+|---|---:|---:|---:|
+| Success rate | 1.00 +/- 0.00 | 1.00 +/- 0.00 | +0.00 (+0.0%) |
+| Legal-rating rate | 1.00 +/- 0.00 | 1.00 +/- 0.00 | +0.00 (+0.0%) |
+| LLM calls / run | 15.00 +/- 0.00 | 19.00 +/- 0.00 | +4.00 (+26.7%) |
+| Tool-call turns / run | 3.00 +/- 0.00 | 3.00 +/- 0.00 | +0.00 (+0.0%) |
+| Tool invocations / run | 12.00 +/- 0.00 | 12.00 +/- 0.00 | +0.00 (+0.0%) |
+| Prompt chars / run | 48492 +/- 136 | 61286 +/- 266 | +12794.00 (+26.4%) |
+| Data methods reached / run | 12.00 +/- 0.00 | 12.00 +/- 0.00 | +0.00 (+0.0%) |
+| Non-empty reports / run | 7.00 +/- 0.00 | 7.00 +/- 0.00 | +0.00 (+0.0%) |
+| Bull invocations / run | 1.00 +/- 0.00 | 3.00 +/- 0.00 | +2.00 (+200.0%) |

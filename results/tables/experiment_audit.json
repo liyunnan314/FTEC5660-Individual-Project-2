@@ -1,0 +1,45 @@
+{
+  "upstream_repo": "https://github.com/TauricResearch/TradingAgents",
+  "upstream_commit": "9fa1196fffbcfd9de5146d2dd2869df84ab99838",
+  "upstream_version": "0.7.1",
+  "target_capability": "tests/test_graph_end_to_end.py::test_a_full_run_reaches_a_logged_decision and the README's claim that the LangGraph multi-agent pipeline runs analysts -> debate -> trader -> risk -> portfolio manager end to end",
+  "controlled_variable": "LLM replaced by in-process deterministic scripted stub",
+  "dataset": "/workspace/ftec5660-reproducibility/data/synthetic_prices.csv",
+  "grid": {
+    "tickers": [
+      "NVDA"
+    ],
+    "dates": [
+      "2025-12-15",
+      "2025-12-22",
+      "2026-01-05"
+    ]
+  },
+  "trials": 5,
+  "arms": {
+    "baseline": {
+      "config_diff": {
+        "max_debate_rounds": 1
+      },
+      "everything_else": "identical to the other arm"
+    },
+    "modified": {
+      "config_diff": {
+        "max_debate_rounds": 3
+      },
+      "everything_else": "identical to the other arm"
+    }
+  },
+  "isolated_change": {
+    "key": "max_debate_rounds",
+    "from": 1,
+    "to": 3
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}

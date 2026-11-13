@@ -1,0 +1,6 @@
+rounds=1 calls=15 prompt_chars=48330 signal=Buy
+rounds=2 calls=17 prompt_chars=54367 signal=Buy
+rounds=3 calls=19 prompt_chars=60972 signal=Buy
+rounds=4 calls=21 prompt_chars=68145 signal=Buy
+rounds=5 calls=23 prompt_chars=75886 signal=Buy
+wrote /workspace/ftec5660-reproducibility/results/tables/rounds_sweep.csv
