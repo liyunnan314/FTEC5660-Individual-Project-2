@@ -53,8 +53,8 @@ needs no API key, no GPU and no paid service. The optional §5.4 follow-up needs
 DeepSeek key (read from the environment, never stored).
 
 ```bash
-git clone https://github.com/liyunnan314/FTEC5660-Reproducibility.git
-cd FTEC5660-Reproducibility
+git clone https://github.com/liyunnan314/FTEC5660-Individual-Project-2.git
+cd FTEC5660-Individual-Project-2
 
 bash setup.sh                     # clone+pin upstream, create .venv, install deps
 
@@ -208,7 +208,7 @@ git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}'
 
 ## Repository
 
-`https://github.com/liyunnan314/FTEC5660-Reproducibility` — branch `main`, a short
+`https://github.com/liyunnan314/FTEC5660-Individual-Project-2` — branch `main`, a short
 history of incremental commits, one concern per commit (`git log --oneline` shows the order:
 scaffold → harness → runner → the single config change → results →
 live-model follow-up → fixes).
