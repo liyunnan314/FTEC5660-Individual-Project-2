@@ -1,0 +1,8 @@
+[baseline 2025-12-15 t0] ok=True signal=Underweight calls=21 tokens=171967  311.5s 
+[baseline 2025-12-22 t0] ok=True signal=Hold calls=18 tokens=156645  265.2s 
+[baseline 2026-01-05 t0] ok=True signal=Underweight calls=18 tokens=170904  297.1s 
+[modified 2025-12-15 t0] ok=True signal=Underweight calls=23 tokens=245486  415.5s 
+[modified 2025-12-22 t0] ok=True signal=Hold calls=24 tokens=321780  437.7s 
+[modified 2026-01-05 t0] ok=True signal=Underweight calls=23 tokens=282424  454.3s 
+
+wrote 6 records to /workspace/ftec5660-reproducibility/results/real_llm

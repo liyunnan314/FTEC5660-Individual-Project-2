@@ -1,0 +1,27 @@
+{
+  "provider": "deepseek",
+  "model_quick": "deepseek-flash",
+  "model_deep": "deepseek-flash",
+  "model_note": "The deepseek-chat alias is deprecated upstream (2026-07-24) and now maps to V4 Flash; the API response reports model=deepseek-flash. The official ID is used here so upstream suppresses tool_choice for this thinking model.",
+  "base_url": "https://api.deepseek.com/v1",
+  "api_key": "present (value never recorded)",
+  "temperature": 0.0,
+  "max_tokens": 2048,
+  "prompt_or_template_changes": "none",
+  "dataset_sha256": "25658b718ee106182f08486d08e89b47378ee80322a7e53941280e4ae1c5d6d3",
+  "trade_date_in_dataset": "2026-01-09",
+  "ticker": "NVDA",
+  "dates": [
+    "2025-12-15",
+    "2025-12-22",
+    "2026-01-05"
+  ],
+  "arms": {
+    "baseline": {
+      "max_debate_rounds": 1
+    },
+    "modified": {
+      "max_debate_rounds": 3
+    }
+  }
+}

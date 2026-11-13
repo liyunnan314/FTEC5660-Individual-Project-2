@@ -1,0 +1,2 @@
+arm,trial,ticker,date,max_debate_rounds,success,error,signal,final_rating,rating_legal,elapsed_s,llm_calls,input_tokens,output_tokens,total_tokens,prompt_chars,llm_seconds,llm_errors,data_methods,reports
+baseline,0,NVDA,2025-12-15,1,True,,Underweight,Underweight,True,319.365,22,121288,55404,176692,405644,360.147,0,12,7

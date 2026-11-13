@@ -1,0 +1,7 @@
+arm,trial,ticker,date,max_debate_rounds,success,error,signal,final_rating,rating_legal,elapsed_s,llm_calls,input_tokens,output_tokens,total_tokens,prompt_chars,llm_seconds,llm_errors,data_methods,reports
+baseline,0,NVDA,2025-12-15,1,True,,Underweight,Underweight,True,311.091,21,115423,56544,171967,385282,353.922,0,12,7
+baseline,0,NVDA,2025-12-22,1,True,,Hold,Hold,True,265.14,18,108241,48404,156645,384838,326.286,0,12,7
+baseline,0,NVDA,2026-01-05,1,True,,Underweight,Underweight,True,297.057,18,117456,53448,170904,407275,349.03,0,12,7
+modified,0,NVDA,2025-12-15,3,True,,Underweight,Underweight,True,415.503,23,174892,70594,245486,649268,463.41,0,12,7
+modified,0,NVDA,2025-12-22,3,True,,Hold,Hold,True,437.673,24,247256,74524,321780,901568,495.148,0,12,7
+modified,0,NVDA,2026-01-05,3,True,,Underweight,Underweight,True,454.285,23,201798,80626,282424,760645,524.099,0,12,7

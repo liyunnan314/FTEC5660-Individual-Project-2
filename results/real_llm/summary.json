@@ -1,0 +1,107 @@
+{
+  "baseline": {
+    "n_cells": 3,
+    "n_success": 3,
+    "rating_legal": 3,
+    "decisions": {
+      "Underweight": 2,
+      "Hold": 1
+    },
+    "mean_llm_calls": 19.0,
+    "mean_input_tokens": 113706.67,
+    "mean_output_tokens": 52798.67,
+    "mean_total_tokens": 166505.33,
+    "mean_prompt_chars": 392465.0,
+    "mean_elapsed_s": 291.1,
+    "mean_llm_seconds": 343.08,
+    "mean_data_methods": 12.0,
+    "mean_reports": 7.0
+  },
+  "modified": {
+    "n_cells": 3,
+    "n_success": 3,
+    "rating_legal": 3,
+    "decisions": {
+      "Underweight": 2,
+      "Hold": 1
+    },
+    "mean_llm_calls": 23.33,
+    "mean_input_tokens": 207982.0,
+    "mean_output_tokens": 75248.0,
+    "mean_total_tokens": 283230.0,
+    "mean_prompt_chars": 770493.67,
+    "mean_elapsed_s": 435.82,
+    "mean_llm_seconds": 494.22,
+    "mean_data_methods": 12.0,
+    "mean_reports": 7.0
+  },
+  "pairs": [
+    {
+      "date": "2025-12-15",
+      "baseline_signal": "Underweight",
+      "modified_signal": "Underweight",
+      "changed": false,
+      "baseline_tokens": 171967,
+      "modified_tokens": 245486,
+      "baseline_calls": 21,
+      "modified_calls": 23,
+      "baseline_elapsed_s": 311.091,
+      "modified_elapsed_s": 415.503
+    },
+    {
+      "date": "2025-12-22",
+      "baseline_signal": "Hold",
+      "modified_signal": "Hold",
+      "changed": false,
+      "baseline_tokens": 156645,
+      "modified_tokens": 321780,
+      "baseline_calls": 18,
+      "modified_calls": 24,
+      "baseline_elapsed_s": 265.14,
+      "modified_elapsed_s": 437.673
+    },
+    {
+      "date": "2026-01-05",
+      "baseline_signal": "Underweight",
+      "modified_signal": "Underweight",
+      "changed": false,
+      "baseline_tokens": 170904,
+      "modified_tokens": 282424,
+      "baseline_calls": 18,
+      "modified_calls": 23,
+      "baseline_elapsed_s": 297.057,
+      "modified_elapsed_s": 454.285
+    }
+  ],
+  "n_paired": 3,
+  "n_decision_changed": 0,
+  "total_api_tokens": 1349206,
+  "total_wall_seconds": 2180.7,
+  "config": {
+    "provider": "deepseek",
+    "model_quick": "deepseek-flash",
+    "model_deep": "deepseek-flash",
+    "model_note": "The deepseek-chat alias is deprecated upstream (2026-07-24) and now maps to V4 Flash; the API response reports model=deepseek-flash. The official ID is used here so upstream suppresses tool_choice for this thinking model.",
+    "base_url": "https://api.deepseek.com/v1",
+    "api_key": "present (value never recorded)",
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "prompt_or_template_changes": "none",
+    "dataset_sha256": "25658b718ee106182f08486d08e89b47378ee80322a7e53941280e4ae1c5d6d3",
+    "trade_date_in_dataset": "2026-01-09",
+    "ticker": "NVDA",
+    "dates": [
+      "2025-12-15",
+      "2025-12-22",
+      "2026-01-05"
+    ],
+    "arms": {
+      "baseline": {
+        "max_debate_rounds": 1
+      },
+      "modified": {
+        "max_debate_rounds": 3
+      }
+    }
+  }
+}
