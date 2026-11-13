@@ -65,9 +65,15 @@ def closes_for(frame: pd.DataFrame, ticker: str) -> pd.Series:
     return pd.Series(sub["Close"].to_numpy(), index=pd.DatetimeIndex(sub["Date"]))
 
 
-def install(mp: MonkeyPatch, model: SeedScriptedModel, dataset: pd.DataFrame,
-            ticker: str) -> set[str]:
-    """Apply all offline replacements; return the set of data methods reached."""
+def install(mp: MonkeyPatch, model: SeedScriptedModel | None, dataset: pd.DataFrame,
+            ticker: str, *, patch_llm: bool = True) -> set[str]:
+    """Apply all offline replacements; return the set of data methods reached.
+
+    ``patch_llm=False`` keeps the vendor injection but leaves the upstream
+    ``create_tier_client`` intact, so a real OpenAI-compatible model can be
+    used while the data vintage stays pinned. The default is unchanged, so the
+    offline experiment is bit-for-bit unaffected by this switch.
+    """
     called: set[str] = set()
     prices = price_frame_for(dataset, ticker)
     closes = closes_for(dataset, ticker)
@@ -89,9 +95,11 @@ def install(mp: MonkeyPatch, model: SeedScriptedModel, dataset: pd.DataFrame,
     mp.setattr(settlement, "get_closes", lambda *a, **k: closes.copy())
     context._identity.cache_clear()
 
-    # 3. The controlled variable: the LLM client factory.
-    mp.setattr(trading_graph, "create_tier_client",
-               lambda config, tier, **k: _StubClient(model))
+    # 3. The controlled variable: the LLM client factory. With patch_llm=False
+    #    the upstream factory is left alone and a real model is used instead.
+    if patch_llm:
+        mp.setattr(trading_graph, "create_tier_client",
+                   lambda config, tier, **k: _StubClient(model))
     return called
 
 

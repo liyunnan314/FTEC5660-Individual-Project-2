@@ -21,4 +21,5 @@ results/raw/*/*/memory/
 results/raw/_probe/
 results/raw/_smoke/
 results/raw/_sweep/
+results/real_llm/work/
 report/*.pdf.tmp
