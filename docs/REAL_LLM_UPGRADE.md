@@ -4,7 +4,7 @@ The assignment's Edge Case A allows replacing a hard-coded or unavailable LLM
 with DeepSeek or another accessible model, as long as the change is documented
 and treated as a controlled variable. This repository runs fully offline by
 default and needs no credential. A live-model follow-up has since been run and
-is reported as §5.4 of `report/reproducibility_report.pdf`; this file records
+is reported as §5.4 of the submitted report; this file records
 exactly how, so it can be repeated.
 
 ## Status

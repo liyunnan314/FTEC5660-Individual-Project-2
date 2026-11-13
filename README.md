@@ -31,7 +31,8 @@ Paper: Xiao et al., [arXiv:2412.20138v7](https://arxiv.org/abs/2412.20138)
 | Live DeepSeek follow-up (§5.4) | 6/6 legal decisions, 0/3 decisions changed, +70% tokens (166k → 283k); see `results/real_llm/comparison.md` |
 | Paper's CR / Sharpe / MDD table | not reproducible (see below) |
 
-Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_report.pdf) (8 pages, A4).
+Full write-up: submitted separately as an 8-page A4 PDF; this repository holds
+the code, the config change and the numbers the write-up cites.
 
 ---
 
@@ -39,9 +40,9 @@ Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_repo
 
 | # | Required item | Where it is |
 |---|---|---|
-| 1 | Brief report (max 10 pages) | `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
+| 1 | Brief report (max 10 pages) | Submitted separately as an 8-page PDF |
 | 2 | GitHub link: clear README, changes in commits, no secrets | This repository — install/run steps below, one concern per commit (`git log --oneline`), nothing credential-like tracked (see [No secrets](#no-secrets)) |
-| 3 | Recorded Zoom presentation (max 15 min) | Script and slides in `presentation/` |
+| 3 | Recorded Zoom presentation (max 15 min) | Submitted separately |
 
 ---
 
@@ -62,7 +63,6 @@ bash setup.sh                     # clone+pin upstream, create .venv, install de
 .venv/bin/python src/run_experiment.py --arm both --trials 5
 .venv/bin/python src/sweep_rounds.py                      # dose-response diagnostic
 .venv/bin/python src/analyze.py                           # tables + figures
-.venv/bin/python report/build_report.py                   # HTML + PDF report
 ```
 
 Or run the whole chain at once: `bash run_all.sh`.
@@ -73,7 +73,6 @@ Optional live-model follow-up (report §5.4). Same grid, same data, only the LLM
 export DEEPSEEK_API_KEY=...            # never commit this
 .venv/bin/python src/run_real_llm.py --arm both --trials 1
 .venv/bin/python src/analyze_real_llm.py
-.venv/bin/python report/build_report.py
 ```
 
 Each live run takes ~5 minutes, so `run_all.sh` leaves this step out.
@@ -117,8 +116,6 @@ results/
   figures/            fig1..fig4 PNG
   real_llm/           cells.csv, summary.json, comparison.md, config_record.json,
                       raw_responses.json (archived for re-scoring)
-report/             build_report.py, reproducibility_report.{html,pdf}
-presentation/       slides.html, slides.pdf, speaker_script.md
 docs/               REAL_LLM_UPGRADE.md, DEBUG_DIARY.md
 vendor/             upstream clone (gitignored, pinned to 9fa1196)
 ```
@@ -213,26 +210,13 @@ git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}'
 
 `https://github.com/liyunnan314/FTEC5660-Reproducibility` — branch `main`, a short
 history of incremental commits, one concern per commit (`git log --oneline` shows the order:
-scaffold → harness → runner → the single config change → results → report →
+scaffold → harness → runner → the single config change → results →
 live-model follow-up → fixes).
 
 Nothing regenerable is tracked: `results/raw/`, `.venv/`, `vendor/` and `.env`
 are gitignored, and `run_all.sh` rebuilds them. The upstream project is not
 vendored — `setup.sh` pins it to `9fa1196`, which keeps the repository small and
 the diff reviewable.
-
----
-
-## Presentation (13 minutes)
-
-- `presentation/slides.html` — 12 slides, self-contained, open in a browser
-  (also exported to `presentation/slides.pdf`).
-- `presentation/speaker_script.md` — timed speaker notes covering exactly what
-  the brief asks: what was attempted, the modification and its measured impact,
-  what worked / didn't, and lessons + recommendations.
-
-Record your screen + voice in Zoom while presenting the slides, then submit the
-recording link.
 
 ---
 

@@ -1,6 +1,6 @@
 # Debug diary
 
-Condensed into §6 of `report/reproducibility_report.pdf`. This file keeps the
+Condensed into §6 of the submitted report. This file keeps the
 evidence and commands for anyone re-running the study.
 
 | # | Blocker / symptom | Root cause | Fix | Evidence |
@@ -31,12 +31,10 @@ bash setup.sh                                   # fixes #1-#5
 .venv/bin/python -m pytest vendor/TradingAgents/tests/test_graph_end_to_end.py -q
 .venv/bin/python src/run_experiment.py --arm both --trials 5
 .venv/bin/python src/sweep_rounds.py && .venv/bin/python src/analyze.py
-.venv/bin/python report/build_report.py
 
 # optional: live-model follow-up (needs DEEPSEEK_API_KEY, ~30 min)
 DEEPSEEK_API_KEY=... .venv/bin/python src/run_real_llm.py --arm both --trials 1
 .venv/bin/python src/analyze_real_llm.py
-.venv/bin/python report/build_report.py     # adds section 5.4 / Figure 4
 ```
 
 Logs: `results/tables/experiment_log.txt`, `sweep_log.txt`, `analyze_log.txt`,
