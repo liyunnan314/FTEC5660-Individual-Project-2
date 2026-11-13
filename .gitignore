@@ -14,12 +14,7 @@ __pycache__/
 .idea/
 .vscode/
 
-# Intermediate per-run work directories are regenerated; raw metrics JSON is kept
-results/raw/*/*/cache/
-results/raw/*/*/results/
-results/raw/*/*/memory/
-results/raw/_probe/
-results/raw/_smoke/
-results/raw/_sweep/
+# Per-run working directories: rewritten by run_all.sh, so they stay out of the repo
+results/raw/
 results/real_llm/work/
 report/*.pdf.tmp

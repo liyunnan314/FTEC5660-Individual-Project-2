@@ -37,14 +37,11 @@ Full write-up: [`report/reproducibility_report.pdf`](report/reproducibility_repo
 
 ## Submission package
 
-The assignment requires three items. The report is here; the GitHub link and the
-recording need to be produced by the student.
-
-| # | Required item | Status here |
+| # | Required item | Where it is |
 |---|---|---|
-| 1 | Brief report (max 10 pages) | ✅ `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
-| 2 | GitHub link: clear README, changes in commits, no secrets | ✅ This repo, with staged, reviewable commits (see `git log`) and `.gitignore`. You still need to push it — see [Publishing](#publishing-to-github). |
-| 3 | Recorded Zoom presentation (max 15 min) | ✅ Script + slides prepared in `presentation/`. You still need to record the video — see [Presentation](#presentation-13-minutes). |
+| 1 | Brief report (max 10 pages) | `report/reproducibility_report.pdf` (8 pp) + editable `report/reproducibility_report.html` |
+| 2 | GitHub link: clear README, changes in commits, no secrets | This repository — install/run steps above, twelve incremental commits (`git log --oneline`), nothing credential-like tracked (see [No secrets](#no-secrets)) |
+| 3 | Recorded Zoom presentation (max 15 min) | Script and slides in `presentation/` |
 
 ---
 
@@ -55,8 +52,8 @@ needs no API key, no GPU and no paid service. The optional §5.4 follow-up needs
 DeepSeek key (read from the environment, never stored).
 
 ```bash
-git clone <your-fork-url> ftec5660-reproducibility
-cd ftec5660-reproducibility
+git clone https://github.com/liyunnan314/FTEC5660-Reproducibility.git
+cd FTEC5660-Reproducibility
 
 bash setup.sh                     # clone+pin upstream, create .venv, install deps
 
@@ -114,7 +111,7 @@ src/
   run_real_llm.py      live-model paired grid (needs DEEPSEEK_API_KEY)
   analyze_real_llm.py  §5.4 tables, summary.json and Figure 4
 results/
-  raw/                per-cell metrics.json (all 30 runs + sweep)
+  raw/                per-cell metrics.json, written by run_all.sh — not committed
   tables/             cells.csv, trials.csv, summary.csv, comparison.md,
                       experiment_audit.json, upstream_test_output.txt, logs
   figures/            fig1..fig4 PNG
@@ -212,23 +209,17 @@ git grep -nE 'sk-[A-Za-z0-9]{20,}|api[_-]?key\s*[:=]\s*["'"'"'][A-Za-z0-9]{20,}'
 
 ---
 
-## Publishing to GitHub
+## Repository
 
-This repository is already on branch `main` with `origin` pointing at
-`https://github.com/liyunnan314/ftec5660-reproducibility.git`, with clean,
-incremental commits (`git log --oneline`). Publish it with one command:
+`https://github.com/liyunnan314/FTEC5660-Reproducibility` — branch `main`, twelve
+incremental commits, one concern per commit (`git log --oneline` shows the order:
+scaffold → harness → runner → the single config change → results → report →
+live-model follow-up → fixes).
 
-```bash
-git push -u origin main
-```
-
-That needs credentials for the `liyunnan314` account (a repo-scoped Personal
-Access Token works); no token is stored in this repository. If you are
-re-creating the repo from scratch, first run `git remote add origin
-https://github.com/liyunnan314/ftec5660-reproducibility.git` and
-`git branch -M main`. Then paste the public URL into the submission. Do not
-commit `.env`, `.venv/` or `vendor/`. The upstream code is pinned by commit hash
-in `setup.sh`, so the repo stays small and reviewable.
+Nothing regenerable is tracked: `results/raw/`, `.venv/`, `vendor/` and `.env`
+are gitignored, and `run_all.sh` rebuilds them. The upstream project is not
+vendored — `setup.sh` pins it to `9fa1196`, which keeps the repository small and
+the diff reviewable.
 
 ---
 
